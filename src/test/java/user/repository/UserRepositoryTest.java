@@ -3,50 +3,51 @@ package user.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import user.model.MemoEntity;
+import user.model.UserEntity;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
-public class MemoRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
-    MemoRepository memoRepository;
+    UserRepository userRepository;
 
     @Test
     public void InsertDummies() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
-            MemoEntity memoEntity = MemoEntity.builder()
-                    .memoTitle("Title : " + i)
-                    .memoText("text content " + i)
+            UserEntity userEntity = UserEntity.builder()
+                    .userEmail("email_" + i)
+                    .userPassword("11_" +i)
+                    .userName("name_" + i)
                     .build();
-            memoRepository.save(memoEntity);
+            userRepository.save(userEntity);
         });
     }
 
     @Test
     public void SelectDummies() {
         Long id = 9L;
-        Optional<MemoEntity> result = memoRepository.findById(id);
+        Optional<UserEntity> result = userRepository.findById(id);
         System.out.println("=======================");
         if(result.isPresent()) {
-            MemoEntity memoEntity = result.get();
-            System.out.println(memoEntity);
+            UserEntity userEntity = result.get();
+            System.out.println(userEntity);
         }
     }
 
     @Test
     public void UpdateDummies() {
-        MemoEntity memoEntity = MemoEntity.builder()
+        UserEntity userEntity = UserEntity.builder()
                 .id(9L)
-                .memoText("update Text 10")
+                .userEmail("email_edted")
                 .build();
-        memoRepository.save(memoEntity);
+        userRepository.save(userEntity);
     }
 
     @Test
     public void DeleteDumies() {
         Long id = 10L;
-        memoRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
